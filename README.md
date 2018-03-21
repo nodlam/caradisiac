@@ -13,7 +13,7 @@
 - [Just tell me what to do](#just-tell-me-what-to-do)
 - [Examples of steps to do](#examples-of-steps-to-do)
   - [Populate](#populate)
-  - [List of suv](#list-of-suv)
+  - [List of cars](#list-of-cars)
 - [MVP](#mvp)
   - [Client-side (bonus)](#client-side-bonus)
 - [Don't forget](#dont-forget)
@@ -27,13 +27,13 @@
 
 ## Objective - Workshop in 1 sentence
 
-**Build an api that get the list of SUV with the higher rate and the higher volume (car boot)**
+**Build an api that get the list of cars with the higher rate and the higher volume (car boot)**
 
 The api
 
 * must listen port `9292`
 * must provide endpoint `/populate` to index records to Elasticsearch
-* must provide endpoint `/suv` that return list of cars with the higher car boot volume
+* must provide endpoint `/cars` that return list of cars with the higher car boot volume
 
 ## How to do that?
 
@@ -82,17 +82,17 @@ Node.js + ES6 + Elasticsearch
 1. use the package [node-car-api](https://github.com/92bondstreet/node-car-api) to get all records in json format
 1. index - with bulk - all records to Elasticsearch
 
-### List of suv
+### List of cars
 
 1. Build an api that provide endpoint `/populate`
-1. Build an api that provide endpoint `/suv`
-1. The `/suv` endpoint could be a ES query to fetch the right data
+1. Build an api that provide endpoint `/cars`
+1. The `/cars` endpoint could be a ES query to fetch the right data
 
 
 ## MVP
 
 1. Build an api that provide endpoint `/populate` to index records to Elasticsearch
-1. Build an api that provide endpoint `/suv` that return list of cars with the higher car boot volume
+1. Build an api that provide endpoint `/cars` that return list of 10 first cars with the higher car boot volume
 
 ### Client-side (bonus)
 
