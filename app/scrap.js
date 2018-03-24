@@ -1,59 +1,49 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-//const elasticsearchinsertion = require("../lib/");
-//const Insert = require("../lib/"); 
-//const connection = require("../lib/");
+const jsonfile = require('jsonfile');
 const {getBrands} = require('node-car-api');
 const {getModels} = require('node-car-api');
-var fs = require("fs");
-const router = express.Router();
 
-router.get('/populate',(req,res) => {
-    Brands();
-   Insertion();
-});
+var count = 0;
+var result = [];
 
-router.get('/cars',(req,res) =>{
-    const searchParams = {
-        'index': 'caradisiac',
-        'body': {
-            'size': 10,
-            'query': {
-                'match_all': {}
-            },
-            'sort': [
-                {
-                    'doc.volume.keyword': {
-                        'order': 'desc'
-                    }
-                }
-            ]
-        }
-    };
-    connection.search(searchParams)
-        .then((resp) => {
-            res.send(resp.hits.hits)
-        })
-        .catch((err) => {
-            res.send(err)
-        });
-})
-async function Brands () {
+async function brands () {
   const brands = await getBrands();
   return brands;
 }
-function Insertion(){
-    var json = JSON.parse(fs.readFileSync("populate.json","utf8"));
-    var bodyBrand = {
-        body:[
-        ]
-    };
-    for(var i = 0; i < json.length; i++){    
-        bodyBrand.body.push({ index:  { _index: 'caradisiac', _type: 'voiture', _id: i } });
-        bodyBrand.body.push({  doc : json[i]} );
 
-    }
-    client.bulk(bodyBrand);
+async function models (brand, callback) {
+  console.log('\ncalling ' + brand)
+  const models = await getModels(brand);
+
+  if(models.length == 0) {
+    console.log(' model non trouvé pour ' + brand + ' ----')
+  }
+  else {
+    models.forEach((mod) => {
+      console.log(mod.model + ' || ' + mod.brand);
+      mod.volume = Number(mod.volume); 
+      result.push(mod);
+      count++;
+    })
+  }
+  setTimeout(() => {
+    callback();
+  }, 500);
 }
 
-module.exports = router;
+brands().then(function(brands) {
+    brands.reduce((promiseChain, item) => {
+      return promiseChain.then(() =>  new Promise((resolve) => {
+        models(item, resolve)
+      }))
+    }, Promise.resolve())
+    .then(() => {
+      console.log('\nombre de modeles : ' + count);
+      jsonfile.writeFile('car.json', result, {spaces: 2}, function(err){
+        if(err) console.error(err);
+        else {
+          console.log('\njson finished')
+        }
+      })
+    })
+})
