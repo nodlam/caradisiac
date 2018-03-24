@@ -1,0 +1,26 @@
+"name": "caradisiac",
+  "version": "1.0.0",
+  "description": "car-api",
+  "main": "scrap.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodlam/caradisiac.git"
+  },
+  "author": "VO Joakim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nodlam/caradisiac/issues"
+  },
+  "homepage": "https://github.com/aptert/caradisiac#readme",
+  "dependencies": {
+    "elasticsearch": "^14.2.1",
+    "node-car-api": "git+https://github.com/92bondstreet/node-car-api.git",
+    "p-settle": "^2.0.0"
+  }
+}
