@@ -2,7 +2,7 @@
 
 ## Install dependencies
 
-## Scrap / Populate
+## Scrap / Populate (NOT MANDATORY BECAUSE JSON FILE HAS BEEN ALREADY GENERATED)
 
 Run app/scrap.js to scrap with node-car-api 
 A json file named car.json will be created
